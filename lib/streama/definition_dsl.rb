@@ -14,7 +14,8 @@ module Streama
     end
     
     delegate :[], :to => :@attributes
-        
+    
+    # create class methods on require    
     def self.data_methods(*args)
       args.each do |method|
         define_method method do |*args|
