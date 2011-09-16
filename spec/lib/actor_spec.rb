@@ -11,6 +11,7 @@ describe "Actor" do
       actor :user, :cache => [:full_name]
       object :listing, :cache => [:title]
       target :listing, :cache => [:title]
+      translation :text, lambda { return ""}
     end
   end
   

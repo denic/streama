@@ -13,6 +13,7 @@ describe "Activity" do
         object :enquiry, :cache => [:comment]
         object :listing, :cache => [:title, :full_address]
         target :listing, :cache => [:title]
+        translation :translation, lambda{ return "#{@attributes[:actor].full_name} posted #{@attributes[:enquiry].comment}" }
       end
       
       @definition.is_a?(Streama::Definition).should be true

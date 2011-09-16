@@ -33,4 +33,10 @@ describe "Definition" do
     dsl.attributes[:target].should eq :company => { :cache=>[:id, :name] }
   end
   
+  it "adds a translation to the definition" do
+    dsl = definition_dsl
+    dsl.translation(:default, lambda { return "translation added"})
+    dsl.attributes[:translation][:default].class.should eq Proc
+  end
+  
 end

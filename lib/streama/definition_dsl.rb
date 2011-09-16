@@ -6,11 +6,12 @@ module Streama
     
     def initialize(name)
       @attributes = {
-        :name => name.to_sym,
-        :actor => {}, 
-        :object => {}, 
-        :target => {}
-      }
+          :name => name.to_sym,
+          :actor => {}, 
+          :object => {}, 
+          :target => {},
+          :translation => {}
+        }
     end
     
     delegate :[], :to => :@attributes
@@ -18,12 +19,12 @@ module Streama
     # create class methods on require    
     def self.data_methods(*args)
       args.each do |method|
-        define_method method do |*args|
-          @attributes[method].store(args[0].is_a?(Symbol) ? args[0] : args[0].class.to_sym, args[1])
+          define_method method do |*args|
+            @attributes[method].store(args[0].is_a?(Symbol) ? args[0] : args[0].class.to_sym, args[1])
         end
       end
     end
-    data_methods :actor, :object, :target
+    data_methods :actor, :object, :target, :translation
 
   end
   
