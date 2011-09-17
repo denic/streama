@@ -90,11 +90,14 @@ module Streama
         assign_data
         save(:validate => false)
       end
+
+      def definition
+        @definition ||= Streama::Definition.find(verb)
+      end      
     
       protected
         
       def assign_data
-      
         [:actor, :object, :target].each do |type|
           next unless object = load_instance(type)
 
@@ -112,10 +115,6 @@ module Streama
           end
           write_attribute(type, hash)      
         end
-      end
-    
-      def definition
-        @definition ||= Streama::Definition.find(verb)
       end
       
     end

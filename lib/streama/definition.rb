@@ -10,6 +10,7 @@ module Streama
       @actor = definition[:actor] || {}
       @object = definition[:object] || {}
       @target = definition[:target] || {}
+      @translation = definition[:translation] || {}
     end
     
     #
