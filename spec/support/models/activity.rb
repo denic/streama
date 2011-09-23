@@ -5,7 +5,7 @@ class Activity
     actor :user, :cache => [:full_name]
     object :enquiry, :cache => [:subject]
     target :listing, :cache => [:title]
-    translation :text, lambda{ return "#{@attributes[:actor].full_name} posted #{@attributes[:enquiry].comment}" }
+    translation :proc, lambda{ |a| return "#{a.actor.full_name} posted #{a.enquiry.comment}" }
   end
   
 end

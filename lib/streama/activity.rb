@@ -93,6 +93,10 @@ module Streama
 
       def definition
         @definition ||= Streama::Definition.find(verb)
+      end
+      
+      def translate
+        definition.translation[:proc].call(self)
       end      
     
       protected

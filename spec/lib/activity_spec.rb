@@ -3,7 +3,7 @@ require 'spec_helper'
 describe "Activity" do
 
   let(:enquiry) { Enquiry.create(:comment => "I'm interested") }
-  let(:listing) { Listing.create(:title => "A test listing") }
+  let(:listing) { Listing.create(:title => "a test listing") }
   let(:user) { User.create(:full_name => "Christos") }
 
   describe '.activity' do
@@ -11,9 +11,12 @@ describe "Activity" do
       @definition = Activity.activity(:new_enquiry) do
         actor :user, :cache => [:full_name]
         object :enquiry, :cache => [:comment]
-        object :listing, :cache => [:title, :full_address]
         target :listing, :cache => [:title]
-        translation :translation, lambda{ return "#{@attributes[:actor].full_name} posted #{@attributes[:enquiry].comment}" }
+        translation :proc, lambda{ |a|
+          actor = a.load_instance(:actor)
+          object = a.load_instance(:target)
+          return "#{actor.full_name} is interesed in #{object.title}" 
+        }
       end
       
       @definition.is_a?(Streama::Definition).should be true
@@ -43,6 +46,17 @@ describe "Activity" do
         @activity.publish
         @activity.actor['full_name'].should eq "testing"
       end
+  end
+  
+  describe '.translate' do
+    it "returns a translation" do
+      activity = Activity.publish(:new_enquiry, {
+          :actor => user, 
+          :object => enquiry, 
+          :target => listing
+        })
+      activity.translate.should be_an_instance_of String
+    end
   end
   
   describe '.publish' do
