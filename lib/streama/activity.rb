@@ -57,7 +57,7 @@ module Streama
       
       def stream_for(actor, options={})
         query = {:receivers => {'$elemMatch' => {:id => actor.id, :type => actor.class.to_s}}}
-				query.merge! = {"$or" => [{:'actor.id' => actor.id, :actor.type => actor.class.to_s}] unless options[:exclude_published]
+				query.merge!({"$or" => {:actor => {'$elemMatch' => {:id => actor.id, :type => actor.class.to_s}}}}) unless options[:exclude_published]
         query.merge!({:verb => options[:type]}) if options[:type]
         self.where(query).without(:receivers).desc(:created_at)
       end
