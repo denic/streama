@@ -1,7 +1,7 @@
 source "http://rubygems.org"
 
-gem "activesupport", "~> 3.0"
-gem "mongoid", "~> 2.0"
+gem "activesupport", "~> 3.1"
+gem "mongoid", "~> 2.3"
 
 group :development do
   gem "rspec", "~> 2.3.0"
